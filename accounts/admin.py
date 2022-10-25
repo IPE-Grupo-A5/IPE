@@ -1,4 +1,4 @@
 from django.contrib import admin
+from .models import Dados
 
-class Dado_Admin(admin.ModelAdmin):
-    pass
+admin.site.register(Dados)
