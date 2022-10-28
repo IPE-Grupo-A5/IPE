@@ -4,7 +4,8 @@ from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from accounts.forms import UploadForm
+from .forms import FormDado
+
 
 def login(request):
     if request.method != 'POST':
@@ -64,15 +65,36 @@ def cadastro(request):
     user.save()
     return redirect('login')
 
+
 @login_required(redirect_field_name='login')
 def dashboard(request):
     return render(request,'accounts/dashboard.html')
 
 @login_required(redirect_field_name='login')
 def add_dados_dashboard(request):
-    return render(request,'accounts/add_dados-dashboard.html')
-
+    form = FormDado(request.POST)
+    if request.method != 'POST':    
+        form = FormDado()    
+        return render(request,'accounts/add_dados-dashboard.html',{"form":form})
+    if not form.is_valid():
+        messages.error(request,"Erro ao enviar formulário.")
+        form = FormDado(request.POST)
+        return render(request,'accounts/add_dados-dashboard.html',{"form":form})
+    #Se o model for alterado e possuir uma ForeignKey usuário,
+    #dá para preencher esse campo automatiamente com
+    #usuario = request.POST.get({{user.username}})
+    #e colocar exclude = ('usuário') 
+    if request.method=='POST':
+        print(request.POST)
+        form = FormDado(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    
 def upload(request):
     form = UploadForm(request.POST, request.FILES)
-    print(request.FILES)
+    if request.method=='POST':
+        form = UploadForm(request.POST)
+        if form.is_valid():
+            form.save()
     return render(request, 'accounts/add_dados-dashboard.html', {'form': form})

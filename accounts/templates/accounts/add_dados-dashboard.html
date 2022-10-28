@@ -71,7 +71,19 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    {{form}}
+                    <div class="container">
+                        <form action="{%url 'add_dados_dashboard' %}" method="POST">
+                            {% csrf_token %}
+                            <table class="table">
+                                {{form}}
+                                <tr>
+                                    <td colspan="2">
+                                        <button type="submit" class="btn btn-primary">ADICIONAR DADO</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
                 </main>
             </div>
         </div>
