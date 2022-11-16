@@ -3,6 +3,6 @@
 {% load crispy_forms_tags %}
 
 {%block form%}
-    {% csrf_token %}{{form|crispy}}
-    <button type="submit" class="btn btn-success">Adicionar</button>
+    {% csrf_token %}{{form}}
+    <button type="submit" class="btn btn-success">Atualizar</button>
 {%endblock%}
