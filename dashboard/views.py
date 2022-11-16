@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
+import datetime
 
 from dashboard.forms import FormDado
 
@@ -36,6 +37,15 @@ def consumo_mensal(request):
 
     queryset = Dado.objects.order_by('potencia_contratada')
     for dado in queryset:
-        labels.append(dado.energia_utilizada_fp)
+        labels.append(str(dado.data_tempo))
         data.append(dado.potencia_contratada)
+
+    zipped_list = sorted(list(zip(labels, data)), key=lambda x: datetime.datetime.strptime(x[0], '%Y-%m-%d'))
+
+    labels = list(list(zip(*zipped_list))[0])
+    data = list(list(zip(*zipped_list))[1])
+
+    for i in range(len(labels)):
+        labels[i] = labels[i][8:10] + "/" + labels[i][5:7] + "/" + labels[i][0:4]
+
     return render(request, 'dashboard/consumo_mensal.html', {'labels': labels, 'data': data})
