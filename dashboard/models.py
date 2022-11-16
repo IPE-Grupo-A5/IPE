@@ -35,4 +35,5 @@ class Dado(models.Model):
     energia_utilizada_fp = models.PositiveIntegerField()
     potencia_utilizada_p = models.PositiveIntegerField()
     potencia_contratada = models.PositiveIntegerField()
+
     data_tempo = models.DateField()

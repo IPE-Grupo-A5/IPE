@@ -1,2 +1,56 @@
 {% extends 'dashboard/base_dashboard.html' %}
 {% load static %}
+{%block form%}
+<h1 class="mt-5">Meus dados</h1>
+
+    
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Concessionária</th>
+          <th>Subgrupo</th>
+          <th>Energia utilizada(p)</th>
+          <th>Energia utilizada(fp)</th>
+          <th>Potência contratada</th>
+          <th>Data</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+
+      
+
+        {% for dado in dados %}
+          <tr>
+            <td><a class="btn btn-sm btn-info" href="{%url 'update_dashboard' dado.id  %}">Editar</a></td>          
+            <td>{{ dado.concessionaria }}</td>
+            <td>{{ dado.subgrupo }}</td>
+            <td>{{ dado.energia_utilizada_p }}</td>
+            <td>{{ dado.energia_utilizada_fp }}</td>
+            <td>{{ dado.potencia_contratada }}</td>
+            <td>{{ dado.data_tempo }}</td>
+            <td><a class="btn btn-sm btn-danger" href="{%url 'delete_dashboard' dado.id  %}">Excluir</a></td>          
+          </tr>
+        {% endfor %}
+
+      
+
+      </tbody>
+    </table>
+
+<hr>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    {%for pagina in dados.paginator.page_range%}
+        {%if dados.number == pagina%}
+            <li class="page-item active"><a class="page-link" href="?p={{ pagina }}">{{ pagina }}</a></li>
+        {%else%}
+            <li class="page-item"><a class="page-link" href="?p={{ pagina }}">{{ pagina }}</a></li>
+        {%endif%}
+    {%endfor%}
+  </ul>
+</nav>
+
+{%endblock%}
