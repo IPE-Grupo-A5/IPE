@@ -35,8 +35,9 @@ def consumo_mensal(request):
     labels = []
     data = []
 
-    queryset = Dado.objects.order_by('potencia_contratada')
+    queryset = Dado.objects.filter(usuario = request.user)
     for dado in queryset:
+        print(dado.usuario)
         labels.append(str(dado.data_tempo))
         data.append(dado.potencia_contratada)
 
