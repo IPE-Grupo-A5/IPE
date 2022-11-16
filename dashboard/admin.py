@@ -4,6 +4,6 @@ from .models import Dado
 # Register your models here.
 
 class dadoAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('usuario', 'data_tempo', 'potencia_contratada')
 
 admin.site.register(Dado, dadoAdmin)
