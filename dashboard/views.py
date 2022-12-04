@@ -74,6 +74,6 @@ def consumo_mensal(request):
     data = list(list(zip(*zipped_list))[1])
 
     for i in range(len(labels)):
-        labels[i] = labels[i][8:10] + "/" + labels[i][5:7] + "/" + labels[i][0:4]
+        labels[i] = labels[i][5:7] + "/" + labels[i][0:4]
 
     return render(request, 'dashboard/consumo_mensal.html', {'labels': labels, 'data': data})
